@@ -1,0 +1,41 @@
+.game-container {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/pattern.png');
+  background-repeat: repeat; /* Repeats the pattern */
+  background-size: 250px auto; /* Default size */
+  background-position: top left; /* Start tiling from the top-left */
+  position: relative;
+}
+
+.game-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.7) 100%);
+  pointer-events: none; /* Ensure the overlay doesn't interfere with interactions */
+}
+
+.game-table {
+  position: absolute;
+  background-image: url('/table.png');
+  background-repeat: no-repeat;
+  background-size: contain; /* Ensures the background fits within the div */
+  background-position: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+}
+
+.current-player-cards-wrapper,
+.card-wrapper,
+.current-player-played-card-wrapper,
+.player-head-wrapper {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 21;
+}

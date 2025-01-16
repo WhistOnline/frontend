@@ -1,0 +1,18 @@
+@use "../../../../../assets/colors" as *;
+
+.player-container {
+  width: 100px;
+  height: 100px;
+  background-color: $light-gray;
+  border: 10px solid $gray;
+  border-radius: 50%;
+  display: flex;
+
+  &.active {
+    border-color: $light-blue;
+  }
+
+  .player-tag {
+    margin: auto;
+  }
+}

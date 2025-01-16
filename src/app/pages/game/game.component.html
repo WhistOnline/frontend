@@ -1,0 +1,34 @@
+<div class="game-container" appElementsPositioning>
+  <div class="player-wrapper" *ngFor="let playerInfo of (getNonCurrentPlayersList$() | async)">
+    <div class="player-head-wrapper">
+      <app-player [playerName]="playerInfo.name" [active]="playerInfo.isTurn"></app-player>
+    </div>
+    <div #playedCards class="card-wrapper" *ngIf="playerInfo.playedCard">
+      <app-card
+        [suit]="playerInfo.playedCard.suit"
+        [cardIndex]="playerInfo.playedCard.index"
+      ></app-card>
+    </div>
+  </div>
+  <div
+    #playedCards
+    class="current-player-played-card-wrapper"
+    *ngIf="currentPlayer?.playedCard"
+  >
+    <app-card
+      [suit]="currentPlayer?.playedCard?.suit"
+      [cardIndex]="currentPlayer?.playedCard?.index"
+    ></app-card>
+  </div>
+  <div class="current-player-cards-wrapper">
+    <app-current-player-cards
+      [playerCards]="stubCards"
+      [gameTableDropZone]="gameTable"
+      [currentPlayerInfo]="currentPlayer"
+      (playedCard)="handleCardPlayed($event)"
+    >
+    </app-current-player-cards>
+  </div>
+  <div class="game-table" #gameTable></div>
+</div>
+

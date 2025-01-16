@@ -1,0 +1,6 @@
+@use "../../../../../assets/variables" as *;
+
+.card-img {
+  width: $card-width;
+  height: $card-height;
+}
