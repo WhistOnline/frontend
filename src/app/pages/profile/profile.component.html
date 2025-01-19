@@ -1,0 +1,37 @@
+<body>
+    <div class="profile-container">
+      <h1 class="game-name">Whist</h1>  
+      <h1 class="menu-title">User&emsp;Profile</h1>
+  
+      <div *ngIf="isLoading" class="loading-spinner">
+        <mat-spinner></mat-spinner>
+      </div>
+  
+      <div class="profile-content" *ngIf="!isLoading && user">
+        <div class="profile-info">
+            <div class="profile-icon-container">
+                <mat-icon class="profile-icon">account_circle</mat-icon>
+            </div>
+    
+            <div class="user-details">
+                <h3 class="info-label">Username</h3>
+                <h1 class="info-value">{{ user.username }}</h1>
+                <h3 class="info-label">Email Address</h3>
+                <h1 class="info-value">{{ user.email }}</h1>
+            </div>
+        </div>
+  
+        <div class="user-stats">
+          <div class="stat-box wins">
+            {{ user.wins }} WINS
+          </div>
+          <div class="stat-box losses">
+            {{ user.losses }} LOSSES
+          </div>
+          <div class="stat-box draws">
+            {{ user.draws }} DRAWS
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>

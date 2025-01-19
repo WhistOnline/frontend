@@ -1,0 +1,30 @@
+<body>
+    <div class="leaderboard-container">
+        <h1 class="game-name">Whist</h1>
+        <h1 class="menu-title">Leaderboard</h1>
+        <div *ngIf="isLoading" class="loading-spinner">
+            <mat-spinner></mat-spinner>
+        </div>
+        <div class="leaderboard-table">
+            <div class="table-header">
+              <div class="table-column">Position</div>
+              <div class="table-column">Username</div>
+              <div class="table-column">Played</div>
+              <div class="table-column">Wins</div>
+              <div class="table-column">Total Points</div>
+            </div>
+        
+            <div
+              class="table-row"
+              *ngFor="let player of players; let i = index"
+              [ngClass]="{ highlighted: player.username === 'Myself' }"
+            >
+              <div class="table-column">#{{ i + 1 }}</div>
+              <div class="table-column">{{ player.username }}</div>
+              <div class="table-column">{{ getGamesPlayed(player) }}</div>
+              <div class="table-column">{{ player.wins }}</div>
+              <div class="table-column">{{ getPlayerPoints(player) }}</div>
+            </div>
+          </div>
+    </div>
+</body>

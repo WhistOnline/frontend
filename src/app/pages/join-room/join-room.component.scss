@@ -1,0 +1,82 @@
+body {
+  margin: 0;
+  background-image: url('/pattern.png');
+  background-repeat: repeat; /* Repeats the pattern */
+  background-size: 250px auto; /* Default size */
+  background-position: top left; /* Start tiling from the top-left */
+  position: relative;
+  height: 95%;
+}
+
+.menu {
+  background-color: #B2B2B2;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.game-name {
+  font-family: 'Jaro', monospace;
+  font-size: 48px;
+  color: #014E00;
+  margin-bottom: 0;
+  margin-top: 0;
+  align-self: center;
+}
+.menu-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 48px;
+  margin-top: 0;
+  align-self: center;
+}
+
+.join-room-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+.join-room {
+    background-color: #014E00;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.join-room:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.join-room-input {
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.join-room-error {
+    color: #e74c3c;
+    text-align: left;
+    font-weight: bold;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+}

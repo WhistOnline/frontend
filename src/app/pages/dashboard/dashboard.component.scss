@@ -1,0 +1,113 @@
+body {
+  margin: 0;
+  background-image: url('/pattern.png');
+  background-repeat: repeat; /* Repeats the pattern */
+  background-size: 250px auto; /* Default size */
+  background-position: top left; /* Start tiling from the top-left */
+  position: relative;
+  height: 95%;
+}
+
+.menu {
+  background-color: #B2B2B2;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.menu-button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.create-room {
+  background-color: #8B0000;
+}
+
+.join-room {
+  background-color: #014E00;
+}
+
+.game-history,
+.leaderboards,
+.rules {
+  background-color: #003366;
+}
+
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.my-profile,
+.log-out {
+  background-color: #003366;
+  width: 48%;
+}
+
+.menu-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.menu-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 48px;
+  margin-top: 0;
+}
+
+.game-name {
+  font-family: 'Jaro', monospace;
+  font-size: 48px;
+  color: #014E00;
+  margin-bottom: 0;
+}
+
+.mat-mdc-progress-spinner { 
+  --mdc-circular-progress-active-indicator-color: black; 
+  width: 45px !important;
+  height: 45px !important;
+  margin-top: 30px;
+}
+
+.spinner-container {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  justify-content: center; /* Center items vertically */
+  align-items: center; /* Center items horizontally */
+  padding: 5px;
+  margin-bottom: 150px;
+}
+
+.creating-room-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.snackbar-green {
+  background-color: green;
+  color: white; 
+  text-align: center;
+  font-family: Arial, sans-serif; 
+  line-height: 1.5; 
+}

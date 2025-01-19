@@ -1,0 +1,25 @@
+<body>
+<div class="menu">
+    <h1 class="game-name">Whist</h1>  
+    <h1 class="menu-title">Main&emsp;Menu</h1>      
+    
+    <div class="spinner-container" *ngIf="isCreatingRoom">
+        <h2 class="creating-room-text">Creating Room</h2>
+        <h2 class="creating-room-text">Please Wait</h2>
+        <mat-spinner class="creating-room-spinner"></mat-spinner>
+    </div>
+
+    <div *ngIf="!isCreatingRoom">
+        <!-- Add createRoom method on click for the button-->
+        <button class="menu-button create-room" (click)="createRoom()">Create Room</button>
+        <button class="menu-button join-room" (click)="joinRoom()">Join Room</button>
+        <button class="menu-button game-history">Game History</button>
+        <button class="menu-button leaderboards" (click)="leaderboard()">Leaderboards</button>
+        <button class="menu-button rules" (click)="viewRules()">Rules</button>
+        <div class="profile-row">
+            <button class="menu-button my-profile" (click)="myProfile()">My Profile</button>
+            <button class="menu-button log-out">Log Out</button>
+        </div> 
+    </div> 
+</div>
+</body>

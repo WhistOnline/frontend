@@ -1,0 +1,78 @@
+body {
+    margin: 0;
+    background-image: url('/pattern.png');
+    background-repeat: repeat; /* Repeats the pattern */
+    background-size: 250px auto; /* Default size */
+    background-position: top left; /* Start tiling from the top-left */
+    position: relative;
+    height: 93%;
+  }
+  // align .menu to the center of the screen
+  .rules-container {
+    background-color: #B2B2B2;
+    overflow-y: auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    max-width: 800px;
+    max-height: 600px;
+    flex-direction: column;
+    align-items: center;
+    width: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .rules-title {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  .rules-section {
+    margin-bottom: 20px;
+  }
+  
+  .section-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #34495e;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #e67e22;
+    padding-bottom: 5px;
+  }
+  
+  .section-content {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #000000;
+  }
+  
+  .section-list {
+    margin: 10px 0;
+    padding-left: 20px;
+  }
+  
+  .numbered-list {
+    list-style-type: decimal;
+  }
+  
+  .section-list li {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #2c3e50;
+  }
+  
+  ul.section-list li::marker {
+    color: #e67e22; /* Custom marker color for unordered lists */
+  }
+  
+  ol.numbered-list li::marker {
+    color: #3498db; /* Custom marker color for ordered lists */
+  }
+  

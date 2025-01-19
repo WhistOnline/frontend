@@ -1,0 +1,11 @@
+<body>
+    <div class="menu">
+        <h1 class="game-name">Whist</h1>  
+        <h1 class="menu-title">Main&emsp;Menu</h1>      
+        
+        <h2 class="join-room-text">Please Enter Room Code:</h2>
+        <input class="join-room-input" type="text" placeholder="#E04X3R" [(ngModel)]="roomCode">
+        <h2 *ngIf="isError" class="join-room-error">{{ errorMessage }}</h2>
+        <button class="menu-button join-room" (click)="joinRoom()">Join Room</button>
+    </div>
+</body>

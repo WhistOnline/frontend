@@ -1,0 +1,36 @@
+/* src/app/header/header.component.scss */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #102711; /* Green background */
+    color: white;
+  }
+  
+  .left-section, .right-section {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+  
+  .left-section mat-icon, .right-section mat-icon {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  
+  .left-section span, .right-section span {
+    font-size: 18px;
+  }
+  
+  /* Inactive sections */
+  .inactive {
+    opacity: 0.2;
+  }
+  
+  /* Hover effect */
+  .left-section:hover, .right-section:hover {
+    opacity: 1;
+  }
+  

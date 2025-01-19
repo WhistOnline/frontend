@@ -1,0 +1,18 @@
+<header class="header">
+    <div 
+      class="left-section" 
+      [class.inactive]="!isDashboardActive()" 
+      (click)="goToDashboard()">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </div>
+  
+    <div 
+      class="right-section" 
+      [class.inactive]="!isProfileActive()" 
+      (click)="goToProfile()">
+      <span>My Profile</span>
+      <mat-icon>account_circle</mat-icon>
+    </div>
+  </header>
+  
