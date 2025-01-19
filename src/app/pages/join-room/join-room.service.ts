@@ -25,10 +25,16 @@ class GameSession {
 })
 export class joinRoomService {
     private baseUrl = 'http://localhost:8200/game-session';
-
-    constructor(private http: HttpClient) { }
+    private currentUserName: string = '';
+    constructor(private http: HttpClient) {
+        const userInfo = localStorage.getItem('currentUser') || '';
+        if (userInfo) {
+            const parsedData = JSON.parse(userInfo);
+            this.currentUserName = parsedData.username;
+        }
+    }
     joinRoom(roomCode: string): any {
-        return this.http.post(this.baseUrl + '/join?username=admin&gameCode=' + roomCode, {});
+        return this.http.post(`${this.baseUrl}/join?username=${this.currentUserName}&gameCode=${roomCode}`, {});
     }
 
     createRoom(): Observable<GameSession> {

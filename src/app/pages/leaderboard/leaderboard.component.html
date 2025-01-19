@@ -17,12 +17,12 @@
             <div
               class="table-row"
               *ngFor="let player of players; let i = index"
-              [ngClass]="{ highlighted: player.username === 'Myself' }"
+              [ngClass]="{ highlighted: player.username === getPlayerName() }"
             >
               <div class="table-column">#{{ i + 1 }}</div>
               <div class="table-column">{{ player.username }}</div>
               <div class="table-column">{{ getGamesPlayed(player) }}</div>
-              <div class="table-column">{{ player.wins }}</div>
+              <div class="table-column">{{ player?.wins ?? 0}}</div>
               <div class="table-column">{{ getPlayerPoints(player) }}</div>
             </div>
           </div>

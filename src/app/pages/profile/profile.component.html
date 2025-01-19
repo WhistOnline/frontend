@@ -23,13 +23,13 @@
   
         <div class="user-stats">
           <div class="stat-box wins">
-            {{ user.wins }} WINS
+            {{ this.getWins() }} WINS
           </div>
           <div class="stat-box losses">
-            {{ user.losses }} LOSSES
+            {{ this.getLosses() }} LOSSES
           </div>
           <div class="stat-box draws">
-            {{ user.draws }} DRAWS
+            {{ this.getDraws() }} DRAWS
           </div>
         </div>
       </div>

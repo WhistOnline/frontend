@@ -9,16 +9,28 @@ import { backendUrl } from '../constants';
 })
 export class UserService {
   private baseUrl = `http://localhost:8200/user`;
-
-  constructor(private http: HttpClient) {}
-
-  getUserProfile(): Observable<User> {
-    return this.http.get<User>(`${this.baseUrl}/1`);
+  public userInfo: User | null = null;
+  constructor(private http: HttpClient) {
+    const userData = localStorage.getItem('currentUser');
+    if (userData) {
+      const parsedData = JSON.parse(userData);
+      this.userInfo = new User(
+        parsedData.username,
+        parsedData.email,
+        parsedData.wins,
+        parsedData.draws,
+        parsedData.losses
+      );  
+    }
   }
 
-  // TODO: change hardcoded variable to actual user data
-  updateUserProfile(user: User): Observable<User> {
-    return this.http.put<User>(`${this.baseUrl}/?name=admin`, user);
+  getUserProfile(): Observable<User> {
+    if (this.userInfo) {
+      return this.http.get<User>(`${this.baseUrl}?name=${this.userInfo.username}`);
+    } else {
+      // it should never reach this point
+      return this.http.get<User>(`${this.baseUrl}/1`);
+    }
   }
 
   getLeaderboard(): Observable<User[]> {

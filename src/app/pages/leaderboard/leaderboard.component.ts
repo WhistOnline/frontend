@@ -14,9 +14,7 @@ import { UserService } from '../../services/user.service';
 export class LeaderboardComponent {
   isLoading: boolean = false;
   players: User[] = [];
-
   constructor(private userService: UserService) { 
-
   }
 
   ngOnInit() {
@@ -28,6 +26,10 @@ export class LeaderboardComponent {
 
   getPlayerPoints(user: User): number {
     return user.wins * 3 + user.draws;
+  }
+
+  getPlayerName(): string {
+    return this.userService.userInfo?.username || 'Guest';
   }
 
   getAllPlayers(): void {

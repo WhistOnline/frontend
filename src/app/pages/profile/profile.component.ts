@@ -21,8 +21,8 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getUserProfile().subscribe(
-      (data) => {
-        this.user = data;
+      (data: any) => {
+        this.user = data[0];
         this.isLoading = false;
       },
       (error) => {
@@ -30,5 +30,17 @@ export class ProfileComponent implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+
+  getWins(): number {
+    return this.user?.wins || 0;
+  }
+
+  getDraws(): number {
+    return this.user?.draws || 0;
+  }
+
+  getLosses(): number {
+    return this.user?.losses || 0;
   }
 }
