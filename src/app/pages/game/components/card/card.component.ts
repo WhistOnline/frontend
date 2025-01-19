@@ -25,6 +25,6 @@ export class CardComponent {
       return '';
     }
 
-    return `${this.prefix}${this.suit}_${this.cardIndex}.png`;
+    return `${this.prefix}${this.suit.toLowerCase()}_${this.cardIndex}.png`;
   }
 }

@@ -1,8 +1,8 @@
 export enum CardSuit {
-  HEARTS = 'hearts',
-  SPADES = 'spades',
-  DIAMONDS = 'diamonds',
-  CLUBS = 'clubs',
+  HEARTS = 'Hearts',
+  SPADES = 'Spades',
+  DIAMONDS = 'Diamonds',
+  CLUBS = 'Clubs',
 }
 
 export enum CardIndex {

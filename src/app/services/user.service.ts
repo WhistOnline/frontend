@@ -11,7 +11,7 @@ export class UserService {
   private baseUrl = `http://localhost:8200/user`;
   public userInfo: User | null = null;
   constructor(private http: HttpClient) {
-    const userData = localStorage.getItem('currentUser');
+    const userData = sessionStorage.getItem('currentUser');
     if (userData) {
       const parsedData = JSON.parse(userData);
       this.userInfo = new User(
@@ -19,14 +19,16 @@ export class UserService {
         parsedData.email,
         parsedData.wins,
         parsedData.draws,
-        parsedData.losses
-      );  
+        parsedData.losses,
+      );
     }
   }
 
   getUserProfile(): Observable<User> {
     if (this.userInfo) {
-      return this.http.get<User>(`${this.baseUrl}?name=${this.userInfo.username}`);
+      return this.http.get<User>(
+        `${this.baseUrl}?name=${this.userInfo.username}`,
+      );
     } else {
       // it should never reach this point
       return this.http.get<User>(`${this.baseUrl}/1`);

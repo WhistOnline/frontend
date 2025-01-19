@@ -6,164 +6,138 @@ import {
   map,
   merge,
   Observable,
-  share,
   shareReplay,
   Subject,
   switchMap,
   take,
-  timer,
 } from 'rxjs';
 import { Card, GameState, PlayerHand, Scoreboard } from '../game.types';
-import { CardIndex, CardSuit } from '../components/card/card.types';
+import { GameSessionService } from './game-session.service';
+import { HttpClient } from '@angular/common/http';
 
-const stubGameState = {
-  playerHands: [
-    { userId: '1', handCards: [], isTurn: false },
-    { userId: '2', handCards: [], isTurn: false },
-    { userId: '3', handCards: [], isTurn: false },
-    {
-      userId: '4',
-      handCards: [
-        { suit: CardSuit.HEARTS, index: CardIndex.TWO },
-        { suit: CardSuit.SPADES, index: CardIndex.KING },
-        { suit: CardSuit.DIAMONDS, index: CardIndex.NINE },
-        { suit: CardSuit.CLUBS, index: CardIndex.FOUR },
-        { suit: CardSuit.HEARTS, index: CardIndex.ACE },
-        { suit: CardSuit.SPADES, index: CardIndex.TEN },
-        { suit: CardSuit.DIAMONDS, index: CardIndex.JACK },
-      ],
-      isTurn: true,
-    },
-  ],
-  cardsPlayed: [
-    // { suit: CardSuit.HEARTS, index: CardIndex.THREE },
-    // { suit: CardSuit.SPADES, index: CardIndex.QUEEN },
-    // { suit: CardSuit.DIAMONDS, index: CardIndex.SIX },
-  ],
-  trumpCard: { suit: CardSuit.DIAMONDS, index: CardIndex.ACE },
-  scoreboard: {
-    '1': [
-      { bid: 2, actual: 2 },
-      { bid: 1, actual: 3 },
-      { bid: 3, actual: 1 },
-      { bid: 0, actual: 2 },
-      { bid: 1 },
-    ],
-    '2': [
-      { bid: 1, actual: 3 },
-      { bid: 3, actual: 2 },
-      { bid: 2, actual: 3 },
-      { bid: 2, actual: 1 },
-      { bid: 3 },
-    ],
-    '3': [
-      { bid: 3, actual: 2 },
-      { bid: 2, actual: 1 },
-      { bid: 1, actual: 2 },
-      { bid: 1, actual: 2 },
-      { bid: 3 },
-    ],
-    '4': [
-      { bid: 0, actual: 1 },
-      { bid: 2, actual: 2 },
-      { bid: 1, actual: 2 },
-      { bid: 3, actual: 3 },
-      {},
-    ],
-  },
-};
+// const stubGameState = {
+//   playerHands: [
+//     { userId: '1', handCards: [], isTurn: false },
+//     { userId: '2', handCards: [], isTurn: false },
+//     { userId: '3', handCards: [], isTurn: false },
+//     {
+//       userId: '4',
+//       handCards: [
+//         { suit: CardSuit.HEARTS, index: CardIndex.TWO },
+//         { suit: CardSuit.SPADES, index: CardIndex.KING },
+//         { suit: CardSuit.DIAMONDS, index: CardIndex.NINE },
+//         { suit: CardSuit.CLUBS, index: CardIndex.FOUR },
+//         { suit: CardSuit.HEARTS, index: CardIndex.ACE },
+//         { suit: CardSuit.SPADES, index: CardIndex.TEN },
+//         { suit: CardSuit.DIAMONDS, index: CardIndex.JACK },
+//       ],
+//       isTurn: true,
+//     },
+//   ],
+//   cardsPlayed: [
+//     { suit: CardSuit.HEARTS, index: CardIndex.THREE },
+//     { suit: CardSuit.SPADES, index: CardIndex.QUEEN },
+//     { suit: CardSuit.DIAMONDS, index: CardIndex.SIX },
+//   ],
+//   trumpCard: { suit: CardSuit.DIAMONDS, index: CardIndex.ACE },
+//   scoreboard: {
+//     '1': [
+//       { bid: 2, actual: 2 },
+//       { bid: 1, actual: 3 },
+//       { bid: 3, actual: 1 },
+//       { bid: 0, actual: 2 },
+//     ],
+//     '2': [
+//       { bid: 1, actual: 3 },
+//       { bid: 3, actual: 2 },
+//       { bid: 2, actual: 3 },
+//       { bid: 2, actual: 1 },
+//     ],
+//     '3': [
+//       { bid: 3, actual: 2 },
+//       { bid: 2, actual: 1 },
+//       { bid: 1, actual: 2 },
+//       { bid: 1, actual: 2 },
+//     ],
+//     '4': [
+//       { bid: 0, actual: 1 },
+//       { bid: 2, actual: 2 },
+//       { bid: 1, actual: 2 },
+//       { bid: 3, actual: 2 },
+//     ],
+//   },
+// };
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
-  private readonly playersListSubject: BehaviorSubject<PlayerInfo[]> =
-    new BehaviorSubject<PlayerInfo[]>([
-      {
-        id: '1',
-        name: 'Player 1',
-        isTurn: false,
-      },
-      {
-        id: '2',
-        name: 'Player 2',
-        isTurn: false,
-      },
-      {
-        id: '3',
-        name: 'Player 3',
-        isTurn: false,
-      },
-      {
-        id: '4',
-        name: 'Myself',
-        isTurn: false,
-      },
-    ]);
   private currentPlayerPlayedCardSubject: Subject<Card> = new Subject<Card>();
   private currentPlayerBidSubject: Subject<number> = new Subject<number>();
 
-  private readonly stubGameState$: Observable<GameState> = timer(0, 50000).pipe(
-    map((_) => {
-      return JSON.parse(JSON.stringify(stubGameState));
-    }),
-    shareReplay(1),
-  );
-  private readonly gameState$: Observable<GameState> = merge(
-    this.stubGameState$,
-    this.currentPlayerPlayedCardSubject.asObservable().pipe(
-      switchMap((card) =>
-        combineLatest([this.stubGameState$, this.currentPlayerId$]).pipe(
-          take(1),
-          map(([gameState, currentPlayerId]) => {
-            const currentIdx = gameState.playerHands.findIndex(
-              (playerHand) => playerHand.userId === currentPlayerId,
-            );
+  private readonly stubGameState$!: Observable<GameState>;
+  private readonly gameState$!: Observable<GameState>;
 
-            if (currentIdx + 1 < gameState.playerHands.length) {
-              gameState.playerHands[currentIdx + 1].isTurn = true;
-            }
+  private readonly playersList$!: Observable<PlayerInfo[]>;
+  private readonly currentPlayerId$!: Observable<string>;
 
-            gameState.playerHands[currentIdx].isTurn = false;
-            gameState.cardsPlayed.push(card);
+  constructor(
+    private gameSessionService: GameSessionService,
+    private httpClient: HttpClient,
+  ) {
+    this.playersList$ = this.gameSessionService.playerInfo$;
+    this.stubGameState$ = this.gameSessionService.gameState$.pipe(
+      shareReplay(1),
+    );
+    this.currentPlayerId$ = this.gameSessionService.currentPlayerName$;
+    this.gameState$ = merge(
+      this.stubGameState$,
+      this.currentPlayerPlayedCardSubject.asObservable().pipe(
+        switchMap((card) =>
+          combineLatest([this.stubGameState$, this.currentPlayerId$]).pipe(
+            take(1),
+            map(([gameState, currentPlayerId]) => {
+              const currentIdx = gameState.playerHands.findIndex(
+                (playerHand) => playerHand.userId === currentPlayerId,
+              );
 
-            return gameState;
-          }),
+              if (currentIdx + 1 < gameState.playerHands.length) {
+                gameState.playerHands[currentIdx + 1].isTurn = true;
+              }
+
+              gameState.playerHands[currentIdx].isTurn = false;
+              gameState.cardsPlayed.push(card);
+
+              return gameState;
+            }),
+          ),
         ),
       ),
-    ),
-    this.currentPlayerBidSubject.asObservable().pipe(
-      switchMap((bid) =>
-        combineLatest([this.stubGameState$, this.currentPlayerId$]).pipe(
-          take(1),
-          map(([gameState, currentPlayerId]) => {
-            const currentIdx = gameState.playerHands.findIndex(
-              (playerHand) => playerHand.userId === currentPlayerId,
-            );
+      this.currentPlayerBidSubject.asObservable().pipe(
+        switchMap((bid) =>
+          combineLatest([this.stubGameState$, this.currentPlayerId$]).pipe(
+            take(1),
+            map(([gameState, currentPlayerId]) => {
+              const currentIdx = gameState.playerHands.findIndex(
+                (playerHand) => playerHand.userId === currentPlayerId,
+              );
 
-            gameState.playerHands[
-              (currentIdx + 1) % gameState.playerHands.length
-            ].isTurn = true;
+              gameState.playerHands[
+                (currentIdx + 1) % gameState.playerHands.length
+              ].isTurn = true;
 
-            gameState.playerHands[currentIdx].isTurn = false;
-            gameState.scoreboard[currentPlayerId][
-              gameState.scoreboard[currentPlayerId].length - 1
-            ].bid = bid;
+              gameState.playerHands[currentIdx].isTurn = false;
+              gameState.scoreboard[currentPlayerId][
+                gameState.scoreboard[currentPlayerId].length - 1
+              ].bid = bid;
 
-            return gameState;
-          }),
+              return gameState;
+            }),
+          ),
         ),
       ),
-    ),
-  ).pipe(shareReplay(1));
-
-  private readonly currentPlayerId$: Observable<string> = new BehaviorSubject(
-    '4',
-  ).asObservable();
-  private readonly playersList$: Observable<PlayerInfo[]> =
-    this.playersListSubject.asObservable();
-
-  constructor() {}
+    ).pipe(shareReplay(1));
+  }
 
   public getPlayerList$(): Observable<PlayerInfo[]> {
     return combineLatest([this.playersList$, this.gameState$]).pipe(
@@ -249,11 +223,43 @@ export class GameService {
   }
 
   public playCard(card: Card): void {
-    // TODO Also make the request
     this.currentPlayerPlayedCardSubject.next(card);
+    combineLatest([
+      this.gameSessionService.currentPlayerName$,
+      this.gameSessionService.currentPlayerToken$,
+      this.gameSessionService.gameCode$,
+    ])
+      .pipe(take(1))
+      .subscribe(([currentPlayerName, currentPlayerToken, gameCode]) => {
+        this.httpClient
+          .post(
+            `http://localhost:8200/card?username=${currentPlayerName}&gameCode=${gameCode}`,
+            {
+              value: card.index,
+              suit: card.suit,
+            },
+            { headers: { Authorization: `Bearer: ${currentPlayerToken}` } },
+          )
+          .subscribe(console.log);
+      });
   }
 
   public bidForHand(bid: number): void {
     this.currentPlayerBidSubject.next(bid);
+    combineLatest([
+      this.gameSessionService.currentPlayerName$,
+      this.gameSessionService.currentPlayerToken$,
+      this.gameSessionService.gameCode$,
+    ])
+      .pipe(take(1))
+      .subscribe(([currentPlayerName, currentPlayerToken, gameCode]) => {
+        this.httpClient
+          .post(
+            `http://localhost:8200/bid?username=${currentPlayerName}&gameCode=${gameCode}&bidValue=${bid}`,
+            {},
+            { headers: { Authorization: `Bearer: ${currentPlayerToken}` } },
+          )
+          .subscribe(console.log);
+      });
   }
 }

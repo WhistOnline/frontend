@@ -5,6 +5,7 @@
       <th class="name-cell">Player Name</th>
       <th class="number-cell">Bids</th>
       <th class="number-cell">Hands</th>
+      <th class="number-cell">Total</th>
     </tr>
     </thead>
     <tbody>
@@ -12,6 +13,7 @@
       <td class="name-cell">{{ row.name }}</td>
       <td class="number-cell">{{ row.bid ?? '-' }}</td>
       <td class="number-cell">{{ row.actual ?? '-' }}</td>
+      <td class="number-cell">{{ row.totalScore }}</td>
     </tr>
     </tbody>
   </table>

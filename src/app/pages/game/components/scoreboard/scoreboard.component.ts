@@ -13,7 +13,12 @@ export class ScoreboardComponent {
   @Input() scoreboard!: Scoreboard;
   @Input() playerInfoList: PlayerInfo[] = [];
 
-  public getTabularData(): { name: string; bid?: number; actual?: number }[] {
+  public getTabularData(): {
+    name: string;
+    bid?: number;
+    actual?: number;
+    totalScore: number;
+  }[] {
     const tabularData = [];
 
     if (this.scoreboard) {
@@ -30,11 +35,33 @@ export class ScoreboardComponent {
             name: playerInfo.name,
             bid: scoreData.bid,
             actual: scoreData.actual,
+            totalScore: this.getTotalScore(userId),
           });
         }
       }
     }
 
     return tabularData;
+  }
+
+  private getTotalScore(userId: string): number {
+    if (this.scoreboard) {
+      const scoreData = this.scoreboard[userId];
+      let score = 0;
+
+      scoreData.forEach((bidData, idx) => {
+        if (idx !== scoreData.length - 1) {
+          if (bidData.bid === bidData.actual) {
+            score += 5 + (bidData.bid ?? 0);
+          } else {
+            score -= Math.abs((bidData.bid ?? 0) - (bidData.actual ?? 0));
+          }
+        }
+      });
+
+      return score;
+    }
+
+    return 0;
   }
 }

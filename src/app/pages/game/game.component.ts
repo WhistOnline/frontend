@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PlayerComponent } from './components/player/player.component';
 import { ElementsPositioningDirective } from './directives/elements-positioning.directive';
 import { CardComponent } from './components/card/card.component';
-import { Card, GameState, Scoreboard } from './game.types';
-import { CardIndex, CardSuit } from './components/card/card.types';
+import { Card, Scoreboard } from './game.types';
 import { CurrentPlayerCardsComponent } from './components/current-player-cards/current-player-cards.component';
 import { PlayerInfo } from './interfaces/player-info.interface';
 import { CommonModule } from '@angular/common';
@@ -57,6 +56,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.currentPlayerSubscription = this.gameService
       .getCurrentPlayer$()
       .subscribe((currentPlayer) => {
+        console.log('Current Player', currentPlayer);
         this.currentPlayer = currentPlayer;
       });
     this.nonCurrentPlayersListSubscription =
@@ -94,15 +94,10 @@ export class GameComponent implements OnInit, OnDestroy {
       this.generateMessageForDisplay();
     });
     this.messageSubscription = combineLatest([
-      this.gameService
-        .getCurrentPlayer$()
-        .pipe(tap(() => console.log('Current player'))),
-      this.gameService
-        .getPlayerList$()
-        .pipe(tap(() => console.log('Player List'))),
-      this.gameService.getIsBid$().pipe(tap(() => console.log('Is Bid'))),
+      this.gameService.getCurrentPlayer$(),
+      this.gameService.getPlayerList$(),
+      this.gameService.getIsBid$(),
     ]).subscribe(([currentPlayer, playerList, isBid]) => {
-      console.log('Message Subscription', currentPlayer, playerList, isBid);
       let message = '';
       if (currentPlayer && playerList) {
         if (currentPlayer.isTurn) {

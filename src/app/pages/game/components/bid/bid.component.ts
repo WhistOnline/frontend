@@ -84,19 +84,19 @@ export class BidComponent implements OnChanges {
         this.scoreboard[this.currentPlayerInfo.id].length;
 
       if (scoreboardLength < 5 || scoreboardLength > 20) {
-        return 8;
-      }
-
-      if (scoreboardLength > 10 && scoreboardLength < 15) {
         return 1;
       }
 
+      if (scoreboardLength > 10 && scoreboardLength < 15) {
+        return 8;
+      }
+
       if (scoreboardLength < 11) {
-        return 8 - (scoreboardLength - 4);
+        return scoreboardLength - 4;
       }
 
       if (scoreboardLength > 14) {
-        return scoreboardLength - 13;
+        return 20 - scoreboardLength + 2;
       }
     }
 
