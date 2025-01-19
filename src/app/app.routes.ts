@@ -6,21 +6,26 @@ import { JoinRoomComponent } from './pages/join-room/join-room.component';
 import { RulesComponent } from './pages/rules/rules.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { LeaderboardComponent } from './pages/leaderboard/leaderboard.component';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { AuthGuard } from './guards/auth.guard';
 
 // TODO: Make default route on sign in component
 export const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'game', component: GameComponent },
-  { path: 'join-room', component: JoinRoomComponent },
-  { path: 'rules', component: RulesComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'leaderboard', component: LeaderboardComponent },
-  { path: '**', redirectTo: '/dashboard' }
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'game', component: GameComponent, canActivate: [AuthGuard] },
+  { path: 'join-room', component: JoinRoomComponent, canActivate: [AuthGuard] },
+  { path: 'rules', component: RulesComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'leaderboard', component: LeaderboardComponent, canActivate: [AuthGuard] },
+  { path: 'register', component: RegisterPageComponent },
+  { path: 'login', component: LoginPageComponent },
+  { path: '**', redirectTo: '/dashboard' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }

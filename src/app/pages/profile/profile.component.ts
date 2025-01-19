@@ -22,7 +22,6 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getUserProfile().subscribe(
       (data) => {
-        debugger;
         this.user = data;
         this.isLoading = false;
       },

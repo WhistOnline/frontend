@@ -24,7 +24,7 @@ export class DashboardComponent {
 
   createRoom(): void {
     this.isCreatingRoom = true;
-    // navigate towards the game page only if the room is created successfully  
+    // navigate towards the game page only if the room is created successfully
     this.roomService.createRoom().subscribe((gameSession) => {
       this.isCreatingRoom = false;
       this.router.navigate(['/game']);
@@ -52,6 +52,10 @@ export class DashboardComponent {
 
   leaderboard(): void {
     this.router.navigate(['/leaderboard']);
+  }
+
+  logout(): void {
+    this.router.navigate(['/login']);
   }
 }
 
