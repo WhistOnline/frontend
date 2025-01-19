@@ -3,12 +3,12 @@
 >
   <div
     class="current-player-card-wrapper"
-    *ngFor="let card of playerCards; index as i"
+    *ngFor="let playableCard of playerCardsWithPlayableInfo; index as i"
     cdkDrag
     (cdkDragReleased)="handleDragRelease($event, i)"
     [cdkDragFreeDragPosition]="dragCoordinates[i]"
-    [cdkDragDisabled]="!currentPlayerInfo?.isTurn"
+    [cdkDragDisabled]="isBid || !currentPlayerInfo?.isTurn || !playableCard.canPlay"
   >
-    <app-card [suit]="card.suit" [cardIndex]="card.index"></app-card>
+    <app-card [suit]="playableCard.card.suit" [cardIndex]="playableCard.card.index"></app-card>
   </div>
 </div>

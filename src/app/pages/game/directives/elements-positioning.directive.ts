@@ -34,6 +34,8 @@ type OffsetWithRotate = Offset & {
 export class ElementsPositioningDirective implements AfterViewInit, OnDestroy {
   @ContentChildren('playedCards', { descendants: true })
   playedCards!: QueryList<ElementRef>;
+  @ContentChildren('playerWrapper', { descendants: true })
+  playerWrapper!: QueryList<ElementRef>;
 
   private resizeObserver?: ResizeObserver;
   private positioningObserver?: Subscriber<unknown>;
@@ -54,6 +56,7 @@ export class ElementsPositioningDirective implements AfterViewInit, OnDestroy {
 
     this.combinedPositioningSubscription = combineLatest([
       this.playedCards.changes.pipe(startWith(null)),
+      this.playerWrapper.changes.pipe(startWith(null)),
       positioning$,
     ]).subscribe(() => {
       this.positionElements();
@@ -117,26 +120,24 @@ export class ElementsPositioningDirective implements AfterViewInit, OnDestroy {
       if (cardOffset.rotate !== 0) {
         playerCard.style.transform = `translate(-50%, -50%) rotate(${cardOffset.rotate}deg)`;
       }
-
-      playerCard.animate(
-        [
-          { transform: `${playerCard.style.transform} translateX(100px)` },
-          { transform: playerCard.style.transform },
-        ],
-        {
-          duration: 2000,
-          easing: 'ease-in-out',
-        },
-      );
     }
 
     const currentPlayerCardsWrapper =
       this.elementRef.nativeElement.querySelector(
-        '.current-player-cards-wrapper',
+        '.current-player-screen-wrapper',
       ) as HTMLElement;
 
     currentPlayerCardsWrapper.style.top = `${gameContainerDimensions.height / 2 + tableDimensions.height / 2 + 100}px`;
     currentPlayerCardsWrapper.style.left = `${gameContainerDimensions.width / 2}px`;
+
+    const currentPlayerBidWrapper = this.elementRef.nativeElement.querySelector(
+      '.current-player-bid-wrapper',
+    ) as HTMLElement;
+
+    if (currentPlayerBidWrapper) {
+      currentPlayerBidWrapper.style.top = `${gameContainerDimensions.height / 2 + tableDimensions.height / 2 - 100}px`;
+      currentPlayerBidWrapper.style.left = `${gameContainerDimensions.width / 2}px`;
+    }
 
     const currentPlayerPlayedCardWrapper =
       this.elementRef.nativeElement.querySelector(
@@ -144,8 +145,25 @@ export class ElementsPositioningDirective implements AfterViewInit, OnDestroy {
       ) as HTMLElement;
 
     if (currentPlayerPlayedCardWrapper) {
-      currentPlayerPlayedCardWrapper.style.top = `${gameContainerDimensions.height / 2 + tableDimensions.height / 2 - 100}px`;
+      currentPlayerPlayedCardWrapper.style.top = `${gameContainerDimensions.height / 2 + tableDimensions.height / 2 - 75}px`;
       currentPlayerPlayedCardWrapper.style.left = `${gameContainerDimensions.width / 2}px`;
+    }
+
+    const trumpCardWrapper = this.elementRef.nativeElement.querySelector(
+      '.trump-card-wrapper',
+    ) as HTMLElement;
+
+    if (trumpCardWrapper) {
+      trumpCardWrapper.style.top = `${gameContainerDimensions.height / 2}px`;
+      trumpCardWrapper.style.left = `${gameContainerDimensions.width / 2}px`;
+    }
+
+    const messageDisplayWrapper = this.elementRef.nativeElement.querySelector(
+      '.message-display-wrapper',
+    ) as HTMLElement;
+    if (messageDisplayWrapper) {
+      messageDisplayWrapper.style.top = `${gameContainerDimensions.height / 2 + tableDimensions.height / 2 + 60}px`;
+      messageDisplayWrapper.style.left = `${gameContainerDimensions.width / 2 + tableDimensions.width / 4}px`;
     }
   }
 

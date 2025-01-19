@@ -31,10 +31,13 @@
   z-index: 20;
 }
 
-.current-player-cards-wrapper,
+.current-player-screen-wrapper,
+.current-player-bid-wrapper,
 .card-wrapper,
 .current-player-played-card-wrapper,
-.player-head-wrapper {
+.player-head-wrapper,
+.trump-card-wrapper,
+.message-display-wrapper {
   position: absolute;
   transform: translate(-50%, -50%);
   z-index: 21;

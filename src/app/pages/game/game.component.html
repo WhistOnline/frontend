@@ -1,5 +1,5 @@
 <div class="game-container" appElementsPositioning>
-  <div class="player-wrapper" *ngFor="let playerInfo of (getNonCurrentPlayersList$() | async)">
+  <div class="player-wrapper" #playerWrapper *ngFor="let playerInfo of nonCurrentPlayerList">
     <div class="player-head-wrapper">
       <app-player [playerName]="playerInfo.name" [active]="playerInfo.isTurn"></app-player>
     </div>
@@ -9,6 +9,13 @@
         [cardIndex]="playerInfo.playedCard.index"
       ></app-card>
     </div>
+  </div>
+  <div class="trump-card-wrapper" *ngIf="trumpCard">
+    <app-card
+      [suit]="trumpCard.suit"
+      [cardIndex]="trumpCard.index"
+      [halo]="true"
+    ></app-card>
   </div>
   <div
     #playedCards
@@ -20,9 +27,15 @@
       [cardIndex]="currentPlayer?.playedCard?.index"
     ></app-card>
   </div>
-  <div class="current-player-cards-wrapper">
+  <div class="current-player-bid-wrapper" *ngIf="isBid">
+    <app-bid [scoreboard]="scoreboard" [playerInfo]="playerList" [currentPlayerInfo]="currentPlayer" (choseBid)="handleBid($event)"></app-bid>
+  </div>
+  <div class="current-player-screen-wrapper">
     <app-current-player-cards
-      [playerCards]="stubCards"
+      [isBid]="isBid"
+      [trumpCard]="trumpCard"
+      [playedCards]="playedCards"
+      [playerCards]="currentPlayerCards"
       [gameTableDropZone]="gameTable"
       [currentPlayerInfo]="currentPlayer"
       (playedCard)="handleCardPlayed($event)"
@@ -30,5 +43,9 @@
     </app-current-player-cards>
   </div>
   <div class="game-table" #gameTable></div>
+  <app-scoreboard [scoreboard]="scoreboard" [playerInfoList]="playerList"></app-scoreboard>
+  <div class="message-display-wrapper">
+    <app-message-display [message]="message"></app-message-display>
+  </div>
 </div>
 

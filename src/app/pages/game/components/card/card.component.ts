@@ -11,6 +11,7 @@ export class CardComponent {
   @Input() public suit?: CardSuit;
   @Input() public cardIndex?: CardIndex;
   @Input() public flipped: boolean = false;
+  @Input() public halo: boolean = false;
 
   private readonly prefix = '/cards/';
 

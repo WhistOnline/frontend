@@ -1,0 +1,30 @@
+table {
+  max-width: 25vw;
+  border-collapse: collapse;
+  font-size: 16px;
+  text-align: center;
+  color: white;
+  z-index: 100;
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  font-weight: bold;
+}
+
+td.number-cell {
+  width: 10%; /* Smaller width for numeric columns */
+}
+
+td.name-cell {
+  text-align: left;
+  padding-left: 12px; /* Align names nicely */
+}
+

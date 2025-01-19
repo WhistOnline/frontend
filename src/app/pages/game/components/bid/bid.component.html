@@ -1,0 +1,13 @@
+<div class="bid-buttons-wrapper">
+  <button
+    class="bid-button"
+    *ngFor="let btn of btnIndices"
+    [class.bid-disabled]="
+      btn === disabledBtnIdx ||
+      !currentPlayerInfo?.isTurn
+    "
+    (click)="clickedBtn(btn)"
+  >
+    {{ btn }}
+  </button>
+</div>

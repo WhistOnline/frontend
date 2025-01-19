@@ -7,7 +7,7 @@ export type Card = {
 
 export type Scoreboard = {
   [userId in string]: {
-    bid: number;
+    bid?: number;
     actual?: number;
   }[];
 };
