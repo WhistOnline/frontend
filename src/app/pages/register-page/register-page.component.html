@@ -1,0 +1,109 @@
+<div class="screen-full-height">
+    <article class="container-center screen-full-height">
+      <div class="content">
+        <h2 class="title title-border">Whist</h2>
+        <h1 class="subtitle">Sign up</h1>
+        <form class="form" id="register" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <p class="mb-3">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="inputUsername"
+              formControlName="username"
+              placeholder="your username"
+              autocomplete="username"
+              [ngClass]="{ 'is-invalid': submitted && f['username'].errors }"
+            />
+            <span
+              *ngIf="submitted && f['username'].errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="f['username'].errors['required']"
+              >Username is required!</span
+              >
+            </span>
+          </p>
+          <p class="mb-3">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="inputEmail"
+              formControlName="email"
+              placeholder="myemail@domain.com"
+              [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+            />
+            <span
+              *ngIf="submitted && f['email'].errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="f['email'].errors['required']">
+                Email is required!
+              </span>
+            </span>
+          </p>
+          <p class="mb-3">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control form-control-sm"
+              id="inputPassword"
+              formControlName="password"
+              placeholder="your password"
+              autocomplete="new-password"
+              [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+            />
+            <span
+              *ngIf="submitted && f['password'].errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="f['password'].errors['required']">
+                Password is required!
+              </span>
+              <span *ngIf="f['password'].errors['minlength']">
+                Password must be at least 6 characters!
+              </span>
+            </span>
+          </p>
+          <p class="mb-3">
+            <label for="password">Confirm password</label>
+            <input
+              type="password"
+              class="form-control form-control-sm"
+              id="inputConfirmPassword"
+              formControlName="confirmPassword"
+              placeholder="your password"
+              autocomplete="new-password"
+              [ngClass]="{
+                'is-invalid': submitted && f['confirmPassword'].errors
+              }"
+            />
+            <span
+              *ngIf="submitted && f['confirmPassword'].errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="f['confirmPassword'].errors['required']">
+                Password confirmation is required!
+              </span>
+            </span>
+          </p>
+          <div class="text-container">
+          <button
+            [disabled]="loading"
+            type="submit"
+            class="btn btn-primary btn-block signup-button"
+          >
+            Register
+          </button>
+          </div>
+          <div class="text-container">
+          <p>
+            <a [routerLink]="'/login'" class="btn btn-link">Login instead</a>
+          </p>
+          </div>
+        </form>
+      </div>
+    </article>
+</div>
+

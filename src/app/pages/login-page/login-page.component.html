@@ -1,0 +1,67 @@
+<div class="screen-full-height">
+    <article class="content">
+      <h2 class="title title-border">Whist</h2>
+      <h1 class="subtitle">Login</h1>
+      <form id="login" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Username -->
+        <p class="form-group flex mb-3">
+          <label for=username>Username</label>
+          <span class="col">
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              formControlName="username"
+              placeholder="username"
+              autocomplete="username"
+              id="username"
+              [ngClass]="{ 'is-invalid': submitted && f['username'].errors }"
+            />
+            <span
+              *ngIf="submitted && f['username'].errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="f['username'].errors['required']">
+                Username is required!
+              </span>
+            </span>
+          </span>
+        </p>
+        <!-- Password -->
+        <p class="form-group flex mb-3">
+          <label for=password>Password</label>
+          <span class="col">
+            <input
+              type="password"
+              class="form-control form-control-sm"
+              formControlName="password"
+              placeholder="password"
+              autocomplete="current-password"
+              id="password"
+              [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+            />
+            <span
+              *ngIf="submitted && f['password'].errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="f['password'].errors['required']">
+                Password is required!
+              </span>
+            </span>
+          </span>
+        </p>
+        <!-- Login button -->
+        <div class="text-container">
+        <button
+          [disabled]="loading"
+          type="submit"
+          class="btn btn-primary btn-block signup-button"
+        >
+          Login
+        </button>
+        </div>
+        <p class="text-container">
+          <a [routerLink]="['/register']" class="btn btn-link">Sign up instead</a>
+        </p>
+      </form>
+    </article>
+</div>

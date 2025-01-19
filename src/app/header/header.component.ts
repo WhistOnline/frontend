@@ -26,7 +26,7 @@ export class HeaderComponent {
   }
 
   goToDashboard(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/dashboard']);
   }
 
   goToProfile(): void {
