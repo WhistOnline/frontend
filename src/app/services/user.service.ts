@@ -8,7 +8,7 @@ import { backendUrl } from '../constants';
   providedIn: 'root',
 })
 export class UserService {
-  private baseUrl = `http://localhost:8200/user`;
+  private baseUrl = `http://34.28.70.201:8080/user`;
   public userInfo: User | null = null;
   constructor(private http: HttpClient) {
     const userData = sessionStorage.getItem('currentUser');

@@ -233,7 +233,7 @@ export class GameService {
       .subscribe(([currentPlayerName, currentPlayerToken, gameCode]) => {
         this.httpClient
           .post(
-            `http://localhost:8200/card?username=${currentPlayerName}&gameCode=${gameCode}`,
+            `http://34.28.70.201:8080/card?username=${currentPlayerName}&gameCode=${gameCode}`,
             {
               value: card.index,
               suit: card.suit,
@@ -255,7 +255,7 @@ export class GameService {
       .subscribe(([currentPlayerName, currentPlayerToken, gameCode]) => {
         this.httpClient
           .post(
-            `http://localhost:8200/bid?username=${currentPlayerName}&gameCode=${gameCode}&bidValue=${bid}`,
+            `http://34.28.70.201:8080/bid?username=${currentPlayerName}&gameCode=${gameCode}&bidValue=${bid}`,
             {},
             { headers: { Authorization: `Bearer: ${currentPlayerToken}` } },
           )

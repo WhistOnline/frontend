@@ -29,7 +29,7 @@ class GameSession {
   providedIn: 'root',
 })
 export class joinRoomService {
-  private baseUrl = 'http://localhost:8200/game-session';
+  private baseUrl = 'http://34.28.70.201:8080/game-session';
   private currentUserName: string = '';
   private currentUserToken: string = '';
   constructor(private http: HttpClient) {

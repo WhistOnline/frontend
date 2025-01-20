@@ -55,7 +55,7 @@ export class GameSessionService {
           this.httpClient
             .get<
               Array<any>
-            >(`http://localhost:8200/game-session/ready?gameCode=${gameCode}`, { headers: { Authorization: `Bearer ${this.currentUserToken}` } })
+            >(`http://34.28.70.201:8080/game-session/ready?gameCode=${gameCode}`, { headers: { Authorization: `Bearer ${this.currentUserToken}` } })
             .pipe(
               catchError((err) => {
                 console.error(err);
@@ -77,7 +77,7 @@ export class GameSessionService {
       switchMap((_) =>
         this.httpClient
           .get(
-            `http://localhost:8200/game-session?username=${this.currentUserName}&gameCode=${gameCode}`,
+            `http://34.28.70.201:8080/game-session?username=${this.currentUserName}&gameCode=${gameCode}`,
             { headers: { Authorization: `Bearer ${this.currentUserToken}` } },
           )
           .pipe(
