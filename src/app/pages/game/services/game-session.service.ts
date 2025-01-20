@@ -43,8 +43,8 @@ export class GameSessionService {
       this.currentPlayerNameSubject.next(this.currentUserName);
       this.currentPlayerTokenSubject.next(this.currentUserToken);
     }
-    this.gameCodeSubject.next('81GLL8');
-    this.startGame('81GLL8');
+    // this.gameCodeSubject.next('81GLL8');
+    // this.startGame('81GLL8');
   }
 
   prepareGameStart(gameCode: string) {
