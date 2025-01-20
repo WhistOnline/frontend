@@ -29,7 +29,7 @@ export class JoinRoomComponent {
     this.joinService.joinRoom(this.roomCode).subscribe(
       () => {
         this.isError = false;
-        this.gameSessionService.startGame(this.roomCode);
+        this.gameSessionService.prepareGameStart(this.roomCode);
         this.router.navigate(['/waiting-room']);
       },
       (error: any) => {

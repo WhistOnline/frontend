@@ -92,7 +92,7 @@ export class BidComponent implements OnChanges {
       }
 
       if (scoreboardLength < 11) {
-        return scoreboardLength - 4;
+        return scoreboardLength - 4 + 1;
       }
 
       if (scoreboardLength > 14) {

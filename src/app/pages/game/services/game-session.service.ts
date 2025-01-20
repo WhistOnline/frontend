@@ -43,12 +43,37 @@ export class GameSessionService {
       this.currentPlayerNameSubject.next(this.currentUserName);
       this.currentPlayerTokenSubject.next(this.currentUserToken);
     }
-    // this.startGame('FKymM2');
+    this.gameCodeSubject.next('81GLL8');
+    this.startGame('81GLL8');
+  }
+
+  prepareGameStart(gameCode: string) {
+    this.gameCodeSubject.next(gameCode);
+    timer(0, 5000)
+      .pipe(
+        switchMap(() =>
+          this.httpClient
+            .get<
+              Array<any>
+            >(`http://localhost:8200/game-session/ready?gameCode=${gameCode}`, { headers: { Authorization: `Bearer ${this.currentUserToken}` } })
+            .pipe(
+              catchError((err) => {
+                console.error(err);
+                return of([]);
+              }),
+            ),
+        ),
+        takeWhile((response: Array<any>) => response.length < 4, true),
+      )
+      .subscribe((response) => {
+        if (response.length === 4) {
+          this.startGame(gameCode);
+        }
+      });
   }
 
   startGame(gameCode: string) {
-    this.gameCodeSubject.next(gameCode);
-    const sererGameState$ = timer(0, 5000).pipe(
+    const serverGameState$ = timer(0, 5000).pipe(
       switchMap((_) =>
         this.httpClient
           .get(
@@ -67,14 +92,14 @@ export class GameSessionService {
       shareReplay(1),
     );
 
-    sererGameState$.subscribe((serverGameState: object | null) => {
+    serverGameState$.subscribe((serverGameState: object | null) => {
       if (serverGameState) {
         this.gameStateSubject.next(
           this.mapServerGameStateToGameState(serverGameState),
         );
       }
     });
-    sererGameState$
+    serverGameState$
       .pipe(takeWhile((response) => !response, true))
       .subscribe((serverGameState: object | null) => {
         if (serverGameState) {
@@ -141,12 +166,12 @@ export class GameSessionService {
     }
     gameState.scoreboard = {};
     serverGameState.scoreBoard.userScores.forEach((userScore: any) => {
-      gameState.scoreboard[userScore.username] = userScore.scoreDetails.map(
-        (scoreDetails: any) => ({
+      gameState.scoreboard[userScore.username] = userScore.scoreDetails
+        .sort((a: any, b: any) => a.roundNo - b.roundNo)
+        .map((scoreDetails: any) => ({
           ...(scoreDetails.bid !== null ? { bid: scoreDetails.bid } : {}),
           actual: scoreDetails.tricksWon === null ? 0 : scoreDetails.tricksWon,
-        }),
-      );
+        }));
     });
 
     return gameState;

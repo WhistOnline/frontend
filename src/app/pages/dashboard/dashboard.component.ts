@@ -35,7 +35,7 @@ export class DashboardComponent {
     this.roomService.createRoom().subscribe(
       (gameSession) => {
         this.isCreatingRoom = false;
-        this.gameSessionService.startGame(gameSession.gameCode);
+        this.gameSessionService.prepareGameStart(gameSession.gameCode);
         this.router.navigate(['/waiting-room']);
       },
       (error) => {
